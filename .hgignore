@@ -1,0 +1,7 @@
+syntax: glob
+parts
+bin
+eggs
+*.sw?
+.installed.cfg
+*.pyc
