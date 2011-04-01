@@ -2,6 +2,7 @@ import StringIO
 import nagiosplugin
 import tempfile
 import zope.testrunner.runner
+import sys
 
 testrunner_argv = []
 
