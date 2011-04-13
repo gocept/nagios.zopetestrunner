@@ -4,8 +4,6 @@ import tempfile
 import zope.testrunner.runner
 import sys
 
-testrunner_argv = []
-
 
 class CheckZopeTestRunner(nagiosplugin.Check):
 
@@ -14,11 +12,12 @@ class CheckZopeTestRunner(nagiosplugin.Check):
 
     def __init__(self, optp, logger):
         super(CheckZopeTestRunner, self).__init__(optp, logger)
+        self.testrunner_argv = optp.rargs
         self.logger = logger
 
     def obtain_data(self):
         sys.argv[:] = sys.argv[:1]
-        self.runner = zope.testrunner.runner.Runner(testrunner_argv)
+        self.runner = zope.testrunner.runner.Runner(self.testrunner_argv)
         old_stdout = sys.stdout
         sys.stdout = redirected_stdout = StringIO.StringIO()
         try:
@@ -37,7 +36,4 @@ class CheckZopeTestRunner(nagiosplugin.Check):
 
 
 def main():
-    if '--' in sys.argv:
-        testrunner_argv = sys.argv[sys.argv.index('--')+1:]
-        sys.argv[:] = sys.argv[:sys.argv.index('--')]
     nagiosplugin.Controller(CheckZopeTestRunner)()
