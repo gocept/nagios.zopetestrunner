@@ -12,8 +12,10 @@ class CheckZopeTestRunner(nagiosplugin.Check):
 
     def __init__(self, optp, logger):
         super(CheckZopeTestRunner, self).__init__(optp, logger)
-        self.testrunner_argv = optp.rargs
         self.logger = logger
+
+    def process_args(self, opts, args):
+        self.testrunner_argv = args
 
     def obtain_data(self):
         sys.argv[:] = sys.argv[:1]
